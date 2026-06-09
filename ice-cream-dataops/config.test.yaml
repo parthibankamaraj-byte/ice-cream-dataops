@@ -8,6 +8,7 @@ environment:
     - modules/bootcamp/use_cases/oee
 
 variables:
+  pause_transformations: false  
   modules:
     bootcamp:
       # Variables shared by modules
