@@ -1,4 +1,4 @@
-- externalId: ds_icapi
+- externalId: {{ icapi_ds_external_id }}
   name: ice_cream_api
   description: This dataset contains asset data for the Ice location.
   writeProtected: false

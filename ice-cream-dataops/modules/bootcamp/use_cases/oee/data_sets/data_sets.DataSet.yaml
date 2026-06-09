@@ -1,5 +1,5 @@
-- externalId: ds_icapi
-  name: ice_cream_api
+- externalId: {{ uc_oee_ds_external_id }}
+  name: Overall_Equipment_Effectiveness_Use_Case
   description: This dataset contains asset data for the Ice location.
   writeProtected: false
   metadata:
