@@ -33,7 +33,7 @@ def get_time_series_for_site(client: CogniteClient, site, space):
             f"----No CogniteAssets in CDF for {site}!----\n"
             f"    Run the 'Create Cognite Asset Hierarchy' transformation!"
         )
-        return
+        return []
 
     sub_tree_nodes = client.data_modeling.instances.list(
         instance_type=CogniteAsset,
@@ -46,7 +46,7 @@ def get_time_series_for_site(client: CogniteClient, site, space):
             f"----No CogniteTimeSeries in CDF for {site}!----\n"
             f"    Run the 'Contextualize Timeseries and Assets' transformation!"
         )
-        return
+        return []
 
     value_list = [{"space": node.space, "externalId": node.external_id} for node in sub_tree_nodes]
 
@@ -104,6 +104,11 @@ def process_site(client, lookback_minutes, site):
     source_space = "icapi_dm_space"
 
     timeseries = get_time_series_for_site(client, site, source_space)
+    
+    if not timeseries:
+        print(f"No timeseries found for {site}. Skipping.")
+        return
+    
     asset_eids = list(set([item.external_id.split(sep=":")[0] for item in timeseries]))
     instance_ids = [NodeId(space=source_space, external_id=ts.external_id) for ts in timeseries]
     all_latest_dps = client.time_series.data.retrieve_latest(instance_id=instance_ids)
